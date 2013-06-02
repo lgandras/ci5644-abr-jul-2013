@@ -1,5 +1,5 @@
 class Question < ActiveRecord::Base
   belongs_to :user
   attr_accessible :body, :title
-  has_many :answers, :comments
+  has_many :answers, :comments, :question_labels
 end
