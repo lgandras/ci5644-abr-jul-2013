@@ -1,4 +1,8 @@
 Ci5644AbrJul2013::Application.routes.draw do
+
+  resources :questions
+
+
   devise_for :users
 
   get "home/index"
