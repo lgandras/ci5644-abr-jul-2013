@@ -14,10 +14,14 @@ class QuestionsController < ApplicationController
   # GET /questions/1.json
   def show
     @question = Question.find(params[:id])
+    @answers = Answer.all
+    @answer = Answer.new
 
     respond_to do |format|
       format.html # show.html.erb
       format.json { render json: @question }
+      format.json { render json: @answers }
+      format.json { render json: @answer }
     end
   end
 

@@ -2,12 +2,8 @@
 
 one:
   body: MyText
-  user: 
-  question: 
   best: false
 
 two:
   body: MyText
-  user: 
-  question: 
   best: false
