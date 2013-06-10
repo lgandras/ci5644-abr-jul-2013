@@ -14,13 +14,17 @@ class AnswersController < ApplicationController
   # GET /answers/1.json
   def show
     @answer = Answer.find(params[:id])
+    @comments = Comment.all
+    @comment = Comment.new
 
     respond_to do |format|
       format.html # show.html.erb
       format.json { render json: @answer }
+      format.json { render json: @comments }
+      format.json { render json: @comment }
     end
   end
-
+  
   # GET /answers/new
   # GET /answers/new.json
   def new
@@ -42,6 +46,7 @@ class AnswersController < ApplicationController
   def create
     @answer = Answer.new(params[:answer])
 
+    @answer.user= current_user
     respond_to do |format|
       if @answer.save
         format.html { redirect_to @answer, notice: 'Answer was successfully created.' }
