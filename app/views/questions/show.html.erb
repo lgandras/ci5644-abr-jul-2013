@@ -28,13 +28,22 @@
   <tr>
     <td><%= answer.body %></td>
     <td><%= answer.best %></td>
-    <td><%= link_to 'Show', question_answer_path %></td>
     <td><%= link_to 'Edit', edit_question_answer_path(answer) %></td>
-    <td><%= link_to 'Destroy', question_answer, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+    <td><%= link_to 'Destroy', [@question, answer], method: :delete, data: { confirm: 'Are you sure?' } %></td>
   </tr>
 <% end %>
 </table>
 
 <br />
 
-<%= render 'formA' %>
+<%= form_for [@question, @question.answers.build] do |f| %>
+  <div class="field">
+    <%=f.label :body  %> <br />
+    <%= f.text_area :body %>
+  </div>
+
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>
+
