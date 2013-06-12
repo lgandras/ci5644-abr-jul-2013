@@ -1,9 +1,13 @@
 Ci5644AbrJul2013::Application.routes.draw do
 
 
+
   resources :questions do
       resources :answers
   end
+
+  resources :comments
+
 
 
 
