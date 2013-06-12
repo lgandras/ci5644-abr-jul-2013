@@ -38,7 +38,8 @@ class AnswersController < ApplicationController
 
   # GET /answers/1/edit
   def edit
-    @answer = Answer.find(params[:id])
+    @question = Question.find(params[:question_id])    
+    @answer = @question.answers.new(params[:answer])
   end
 
   # POST /answers
@@ -78,11 +79,12 @@ class AnswersController < ApplicationController
   # DELETE /answers/1
   # DELETE /answers/1.json
   def destroy
-    @answer = Answer.find(params[:id])
+    @question = Question.find(params[:question_id])    
+    @answer = @question.answers.find(params[:id])
     @answer.destroy
 
     respond_to do |format|
-      format.html { redirect_to answers_url }
+      format.html { redirect_to @question }
       format.json { head :no_content }
     end
   end

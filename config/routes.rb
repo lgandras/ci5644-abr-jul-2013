@@ -1,6 +1,6 @@
 Ci5644AbrJul2013::Application.routes.draw do
 
-
+  root :to => "users#index"
 
   resources :questions do
       resources :answers
@@ -8,17 +8,14 @@ Ci5644AbrJul2013::Application.routes.draw do
 
   resources :comments
 
-
-
-
-
   devise_for :users
-
-  get "home/index"
 
   resources :users
 
-  root :to => "home#index"
+  get "home/index"
+
+
+
 
   # The priority is based upon order of creation:
   # first created -> highest priority.
