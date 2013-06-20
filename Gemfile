@@ -23,6 +23,7 @@ end
 gem 'jquery-rails'
 
 gem 'devise'
+gem 'cancan'
 
 gem 'bootstrap-sass', '~> 2.3.1.0'
 gem 'simple_form'
