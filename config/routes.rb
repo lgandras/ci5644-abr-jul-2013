@@ -3,10 +3,12 @@ Ci5644AbrJul2013::Application.routes.draw do
   root :to => "users#index"
 
   resources :questions do
-      resources :answers
+      resources :comment_questions
+      resources :answers do
+        resources :comments
+      end
   end
 
-  resources :comments
 
   devise_for :users
 

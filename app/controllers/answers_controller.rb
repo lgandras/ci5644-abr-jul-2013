@@ -39,7 +39,12 @@ class AnswersController < ApplicationController
   # GET /answers/1/edit
   def edit
     @question = Question.find(params[:question_id])    
-    @answer = @question.answers.new(params[:answer])
+    @answer = @question.answers.find(params[:id])
+    respond_to do |format|
+      format.html # edit.html.erb
+      format.json { render json: @question }
+      format.json { render json: @answer }
+    end
   end
 
   # POST /answers
