@@ -4,4 +4,5 @@ class Answer < ActiveRecord::Base
   attr_accessible :best, :body
   has_many :comments
   has_many :votes
+  validates :body, :presence => true
 end

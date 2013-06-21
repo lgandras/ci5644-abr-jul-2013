@@ -1,6 +1,6 @@
 Ci5644AbrJul2013::Application.routes.draw do
 
-  root :to => "users#index"
+  root :to => "questions#index"
 
   resources :questions do
       resources :comment_questions

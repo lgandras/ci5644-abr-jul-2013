@@ -4,5 +4,6 @@ class Question < ActiveRecord::Base
   has_many :comment_questions, :dependent => :destroy
   has_many :question_labels, :dependent => :destroy
   attr_accessible :content, :title
+  validates :content, :title, :presence => true
 
 end
