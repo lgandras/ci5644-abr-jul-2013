@@ -1,4 +1,5 @@
 <p id="notice"><%= notice %></p>
+<h4 id="alert"><%= alert %></h4>
 
 <p>
   <h2>
@@ -9,14 +10,12 @@
 <p>
   <h3>
     <%= @question.content %>
-    <%= link_to 'Edit', edit_question_path(@question) %> |
-    <%= link_to 'Back', questions_path %>
   </h3>
 </p>
 
   <h4>
     <b>Pregunta Hecha por: </b>
-      <%= @question.user.username %>
+      <%=@question.user.username %>
   </h4>
   <br />
 
@@ -74,11 +73,17 @@
        <b><%= answer.user.username %>: </b>
     </td>
     <td><%= answer.body %></td>
+    <td><%= link_to 'new', new_question_answer_comment_path(@question, answer) %></td>
     <td></td>
-    <td>
-      <%= link_to 'Destroy', [@question, answer], method: :delete, data: { confirm: 'Are you sure?' } %>
-    </td>
   </tr>
+    <% answer.comments.each do |comment| %>
+  <tr>
+    <td></td>
+    <td></td>
+    <td><%= comment.body %></td>
+    <td></td>
+  </tr>
+  <% end %>
 <% end %>
 </table>
 
@@ -95,3 +100,4 @@
   </div>
 <% end %>
 
+<%= link_to 'Back', questions_path %>

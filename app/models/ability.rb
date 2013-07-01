@@ -34,21 +34,24 @@ class Ability
     if user.has_role? :admin
         Rails.logger.debug "user: #{user} admin"
      #User
-        can :index, User
-        can :update, User
-        can :edit, User
-        can :destroy, User
+        can :index,     User
+        can :update,    User
+        can :edit,      User
+        can :destroy,   User
       #Question
-        can :index, Question
-        can :destroy, Question
+        can :index,     Question
+        can :show,      Question
+        can :destroy,   Question
     elsif user.has_role? :regular
         Rails.logger.debug "user: #{user} regular"
-        can :update, User
-        can :new, User
-        can :create, User
+        can :update,    User
+        can :new,       User
+        can :create,    User
+        can :index,     Question
+        can :show,      Question
     else
         Rails.logger.debug "user: #{user} other"
-        can :index, Question
+        can :index,     Question
     end
   end
 end

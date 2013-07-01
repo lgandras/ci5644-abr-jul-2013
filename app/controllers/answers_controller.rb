@@ -66,7 +66,7 @@ class AnswersController < ApplicationController
         end
     else           
         respond_to do |format|
-            format.html { redirect_to @question, notice: 'Answer was successfully created.' }
+            format.html { redirect_to @question, alert: 'You can not answer your own question' }
             format.json { render json: @question, status: :created, location: @question }
         end
     end

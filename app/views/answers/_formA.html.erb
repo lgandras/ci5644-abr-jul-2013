@@ -1,10 +1,10 @@
-<%= form_for(@answer) do |f| %>
-  <% if @answer.errors.any? %>
+<%= form_for(@question.answers) do |f| %>
+  <% if @question.answers.errors.any? %>
     <div id="error_explanation">
-      <h2><%= pluralize(@answer.errors.count, "error") %> prohibited this answer from being saved:</h2>
+      <h2><%= pluralize(@question.answers.errors.count, "error") %> prohibited this question.answers from being saved:</h2>
 
       <ul>
-      <% @answer.errors.full_messages.each do |msg| %>
+      <% @question.answers.errors.full_messages.each do |msg| %>
         <li><%= msg %></li>
       <% end %>
       </ul>
