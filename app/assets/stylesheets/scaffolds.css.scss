@@ -32,6 +32,10 @@ a {
 div {
   &.field, &.actions {
     margin-bottom: 10px;
+    textarea {
+        width: 600px;
+        height: 200px;
+    }
   }
 }
 
@@ -66,4 +70,5 @@ div {
     font-size: 12px;
     list-style: square;
   }
+
 }

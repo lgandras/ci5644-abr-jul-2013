@@ -1,5 +1,5 @@
 class UsersController < ApplicationController
-  before_filter :authenticate_user!
+  load_and_authorize_resource
   # GET /users
   # GET /users.json
   def index
@@ -14,11 +14,14 @@ class UsersController < ApplicationController
   # GET /users/1
   # GET /users/1.json
   def show
+    #@question = Question.user.find(params[:id])
+    @questions = Question.where(:user_id => params[:id])
     @user = User.find(params[:id])
 
     respond_to do |format|
       format.html # show.html.erb
       format.json { render json: @user }
+      format.json { render json: @questions }
     end
   end
 

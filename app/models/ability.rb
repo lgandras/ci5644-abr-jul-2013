@@ -28,5 +28,25 @@ class Ability
     #
     # See the wiki for details:
     # https://github.com/ryanb/cancan/wiki/Defining-Abilities
+    user ||= User.new # guest user (not logged in)
+    if user.has_role? :admin
+        Rails.logger.debug "user: #{user} admin"
+     #User
+        can :index, User
+        can :update, User
+        can :edit, User
+        can :destroy, User
+      #Question
+        can :index, Question
+        can :destroy, Question
+    elsif user.has_role? :regular
+        Rails.logger.debug "user: #{user} regular"
+        can :update, User
+        can :new, User
+        can :create, User
+    else
+        Rails.logger.debug "user: #{user} other"
+        can :index, Question
+    end
   end
 end

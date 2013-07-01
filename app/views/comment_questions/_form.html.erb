@@ -1,0 +1,21 @@
+<%= form_for(@comment_question) do |f| %>
+  <% if @comment_question.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@comment_question.errors.count, "error") %> prohibited this comment from being saved:</h2>
+
+      <ul>
+      <% @comment_question.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= f.label :body %><br />
+    <%= f.text_area :body %>
+  </div>
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>
