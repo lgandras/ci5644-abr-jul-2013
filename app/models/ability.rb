@@ -31,19 +31,24 @@ class Ability
 
 
     user ||= User.new # guest user (not logged in)
-    if user.rol == 'admin'
-    Rails.logger.debug "user: #{user} admin"
-      can :index, User
-      can :update, User
-      can :edit, User
-      can :destroy, User
-    elsif user.rol == 'regular'
-    Rails.logger.debug "user: #{user} regular"
-      can :update, User
-      can :new, User
-      can :create, User
+    if user.has_role? :admin
+        Rails.logger.debug "user: #{user} admin"
+     #User
+        can :index, User
+        can :update, User
+        can :edit, User
+        can :destroy, User
+      #Question
+        can :index, Question
+        can :destroy, Question
+    elsif user.has_role? :regular
+        Rails.logger.debug "user: #{user} regular"
+        can :update, User
+        can :new, User
+        can :create, User
     else
-    Rails.logger.debug "user: #{user} other"
+        Rails.logger.debug "user: #{user} other"
+        can :index, Question
     end
   end
 end
