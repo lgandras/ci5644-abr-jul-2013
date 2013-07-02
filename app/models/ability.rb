@@ -42,16 +42,20 @@ class Ability
         can :destroy,   Question
     elsif user.has_role? :regular
         Rails.logger.debug "user: #{user} regular"
-        can :update,    User
-        can :new,       User
-        can :create,    User
-        can :index,     Question
-        can :show,      Question
-        can :new,       Question
-        can :create,    Question
+      #User
+        can :update, User, :id => user.id
+      #Question
+        can [:new, :create, :index, :show], Question
+    elsif user.roles.empty?
+        Rails.logger.debug "user: #{user} nil"
+      #User
+        can :new, User
+        can :create, User
+      #Question
+        can :show, Question
+        can :index, Question
     else
         Rails.logger.debug "user: #{user} other"
-        can :index,     Question
     end
   end
 end

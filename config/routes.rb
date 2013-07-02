@@ -3,10 +3,10 @@ Ci5644AbrJul2013::Application.routes.draw do
   root :to => "questions#index"
 
   resources :questions do
-      resources :comment_questions
-      resources :answers do
+    resources :comment_questions
+    resources :answers  do
         resources :comments
-      end
+    end
   end
 
 

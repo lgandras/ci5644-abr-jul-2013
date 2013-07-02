@@ -3,7 +3,12 @@ load_and_authorize_resource
   # GET /questions
   # GET /questions.json
   def index
-    @questions = Question.all
+
+    if params.has_key?(:self)
+      @questions = Question.where("user_id = #{current_user.id}")
+    else
+      @questions = Question.all
+    end
 
     respond_to do |format|
       format.html # index.html.erb
