@@ -47,6 +47,8 @@ class Ability
         can :create,    User
         can :index,     Question
         can :show,      Question
+        can :new,       Question
+        can :create,    Question
     else
         Rails.logger.debug "user: #{user} other"
         can :index,     Question

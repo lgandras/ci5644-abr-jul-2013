@@ -88,6 +88,21 @@ class AnswersController < ApplicationController
     end
   end
 
+  def aprobar
+    @question = Question.find(params[:question_id])    
+    @answer = @question.answers.find(params[:answer_id])
+
+    respond_to do |format|
+      if @answer.update_attributes(:best => true)
+        format.html { redirect_to @answer, notice: 'Answer was successfully updated.' }
+        format.json { head :no_content }
+      else
+        format.html { render action: "edit" }
+        format.json { render json: @answer.errors, status: :unprocessable_entity }
+      end
+    end
+  end
+
   # DELETE /answers/1
   # DELETE /answers/1.json
   def destroy
