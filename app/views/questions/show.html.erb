@@ -10,104 +10,126 @@
 <p>
   <h3>
     <%= @question.content %>
+    <% if can? :edit, @question %>
+      <%= link_to 'Edit', edit_question_path(@question) %> |
+    <% end %>
+    <%= link_to 'Back', questions_path %>
   </h3>
 </p>
 
   <h4>
     <b>Pregunta Hecha por: </b>
-      <%=@question.user.username %>
+      <%= @question.user.username %>
   </h4>
   <br />
 
 
+<% if (can? :index, CommentQuestion) && (can? :show, CommentQuestion) %>
   <h4>
     <b>Comentarios: </b>
   </h4>
   <br />
-<table>
-  <tr>
-    <th></th>
-    <th></th>
-    <th></th>
-    <th></th>
-  </tr>
+  <table>
+    <tr>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+    </tr>
 
-<% @question.comment_questions.each do |comment_question| %>
-  <tr>
+  <% @comment_questions.each do |comment_question| %>
+    <tr>
     <td><b><%= comment_question.user.username %>: </b></td>
-    <td><%= comment_question.body %></td>
-    <td></td>
-    <td></td>
-  </tr>
-<% end %>
-</table>
-
-<%= form_for [@question, @question.comment_questions.build] do |f| %>
-  <div class="field">
-    <%=f.label :Comentar %> 
-    <%= f.text_area :body %>
-  </div>
-
-  <div class="actions">
-    <%= f.submit %>
-  </div>
+      <td><%= comment_question.body %></td>
+      <td></td>
+      <td>
+      <% if can? :destroy, comment_question %>
+        <%= link_to 'Destroy', {:controller => "comment_questions", :action => "destroy", :id => comment_question}, method: :delete, data: { confirm: 'Are you sure?' } %>
+      <% end %>
+      </td>
+    </tr>
+  <% end %>
+  </table>
 <% end %>
 
+<% if can? :new, CommentQuestion.new(:question => @question)  %>
+  <%= form_for [@question, @comment_questions.build] do |f| %>
+    <div class="field">
+      <%=f.label :Comentar %> 
+      <%= f.text_area :body %>
+    </div>
 
-<h2>Respuestas Relacionadas:</h2>
-
-<table>
-  <tr>
-    <th></th>
-    <th></th>
-    <th></th>
-    <th></th>
-  </tr>
-
-<% @question.answers.each do |answer| %>
-  <tr>
-    <td>
-       <b><%= answer.user.username %>: </b><%= answer.body  %> 
-    </td>
-    <td>
-       <% if answer.best == nil -%>
-            <h4>(Sin evaluar)</h4> 
-      <%  else -%>
-            <% if answer.best == true %>
-              <h4>(Correcto)</h4>
-            <% else -%>
-              <h4>(Incorrecto)</h4>
-            <% end %>
-      <% end%>
-    </td>
-    <td><%= link_to 'Comment', new_question_answer_comment_path(@question, answer) %></td>
-    <td>
-      <% if answer.user == current_user -%>
-      <% end%>
-    </td>
-  </tr>
-    <% answer.comments.each do |comment| %>
-  <tr>
-    <td></td>
-    <td></td>
-    <td><%= comment.body %></td>
-    <td></td>
-  </tr>
+    <div class="actions">
+      <%= f.submit %>
+    </div>
   <% end %>
 <% end %>
-</table>
+
+<% if (can? :index, Answer) && (can? :show, Answer) %>
+  <h2>Respuestas Relacionadas:</h2>
+
+  <table>
+    <tr>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+    </tr>
+
+  <% @answers.each do |answer| %>
+    <tr>
+      <td>
+         <b><%= answer.user.username %>: </b> <%= answer.body %>
+      </td>
+      <td>
+         <% if answer.best == nil -%>
+              <h4>(Sin evaluar)</h4> 
+        <%  else -%>
+              <% if answer.best == true %>
+                <h4>(Correcto)</h4>
+              <% else -%>
+                <h4>(Incorrecto)</h4>
+              <% end %>
+        <% end %>
+      </td>
+      <td>
+        <% if can? :new, Comment %>
+        <%= link_to 'Comment', new_answer_comment_path(answer) %>
+        <% end %>
+      </td>
+      <td></td>
+      <td></td>
+      <td>
+        <% if can? :destroy, answer %>
+          <%= link_to 'Destroy', {:controller => "answers", :action => "destroy", :id => answer}, method: :delete, data: { confirm: 'Are you sure?' } %>
+        <% end %>
+      </td>
+    </tr>
+    <% answer.comments.each do |comment| %>
+    <tr>
+      <td></td>
+      <td></td>
+      <td><%= comment.body %></td>
+      <td></td>
+    </tr>
+    <% end %>
+  <% end %>
+  </table>
+<% end %>
 
 <br />
 
-<%= form_for [@question, @question.answers.build] do |f| %>
-  <div class="field">
-    <%=f.label :Responder %> 
-    <%= f.text_area :body %>
-  </div>
+<% if can? :new, Answer.new(:question => @question)  %>
+  <%= form_for [@question, @answers.build] do |f| %>
+    <div class="field">
+      <%=f.label :Responder %> 
+      <%= f.text_area :body %>
+    </div>
 
-  <div class="actions">
-    <%= f.submit %>
-  </div>
+    <div class="actions">
+      <%= f.submit %>
+    </div>
+  <% end %>
 <% end %>
 
 <%= link_to 'Back', questions_path %>

@@ -1,4 +1,5 @@
 class CommentQuestionsController < ApplicationController
+  load_and_authorize_resource
   # GET /comment_questions
   # GET /comment_questions.json
   def index

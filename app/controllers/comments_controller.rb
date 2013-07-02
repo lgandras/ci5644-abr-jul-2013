@@ -1,4 +1,5 @@
 class CommentsController < ApplicationController
+  load_and_authorize_resource
   # GET /comments
   # GET /comments.json
   def index
@@ -24,8 +25,8 @@ class CommentsController < ApplicationController
   # GET /comments/new
   # GET /comments/new.json
   def new
-    @question = Question.find(params[:question_id])
-    @answer = @question.answers.find(params[:answer_id])
+    @answer = Answer.find(params[:answer_id])
+    @comments = @answer.comments
     @comment = Comment.new()
     respond_to do |format|
       format.html # new.html.erb
@@ -41,14 +42,13 @@ class CommentsController < ApplicationController
   # POST /comments
   # POST /comments.json
   def create
-    @question = Question.find(params[:question_id])
-    @answer = @question.answers.find(params[:answer_id])
+    @answer = Answer.find(params[:answer_id])
     @comment = @answer.comments.new(params[:comment])
     @comment.user = current_user
 
     respond_to do |format|
       if @comment.save
-        format.html { redirect_to @question, notice: 'Comment was successfully created.' }
+        format.html { redirect_to @answer.question, notice: 'Comment was successfully created.' }
         format.json { render json: @question, status: :created, location: @question }
       else
         format.html { render action: "new" }

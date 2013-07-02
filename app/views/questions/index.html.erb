@@ -11,9 +11,16 @@
 <% @questions.each do |question| %>
   <tr>
     <td><%= link_to question.title, question %></td>
-    <td></td>
-    <td></td>
-    <td></td>
+    <% if can? :show, question %>
+    <td><%= link_to 'Show', question %></td>
+    <% end %>
+    <% if can? :edit, question %>
+    <td><%= link_to 'Edit', edit_question_path(question) %></td>
+    <% end %>
+    <% if can? :destroy, question %>
+    <td><%= link_to 'Destroy', question, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+    <% end %>
+  </tr>
 <% end %>
 </table>
 

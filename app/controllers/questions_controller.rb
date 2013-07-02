@@ -20,6 +20,8 @@ load_and_authorize_resource
   # GET /questions/1.json
   def show
     @question = Question.find(params[:id])
+    @answers = @question.answers
+    @comment_questions = @question.comment_questions
 
     respond_to do |format|
       format.html # show.html.erb
