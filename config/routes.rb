@@ -2,11 +2,12 @@ Ci5644AbrJul2013::Application.routes.draw do
 
   root :to => "questions#index"
 
-  resources :questions do
-      resources :comment_questions
-      resources :answers do
-        resources :comments
-      end
+  resources :questions, shallow: true do
+    resources :comment_questions
+    resources :answers
+  end
+  resources :answers, only: [:index], shallow: true  do
+    resources :comments
   end
 
 

@@ -1,4 +1,5 @@
 class User < ActiveRecord::Base
+  has_and_belongs_to_many :roles, :join_table => :users_roles
   rolify
   # Include default devise modules. Others available are:
   # :token_authenticatable, :confirmable,
@@ -13,9 +14,11 @@ class User < ActiveRecord::Base
   has_many :answers
   has_many :comments
   has_many :votes
-
-  before_save :addRole
-  def addRole
-    self.add_role "regular"
+  after_create :assign_regular_role
+private
+  def assign_regular_role
+    if self.roles.empty?
+      self.add_role "regular"
+    end
   end
 end
