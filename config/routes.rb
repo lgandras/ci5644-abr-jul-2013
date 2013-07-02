@@ -2,6 +2,9 @@ Ci5644AbrJul2013::Application.routes.draw do
 
   root :to => "questions#index"
 
+  devise_for :users
+
+  resources :users
   resources :questions, shallow: true do
       resources :comment_questions
       resources :answers, shallow: true do
@@ -9,10 +12,7 @@ Ci5644AbrJul2013::Application.routes.draw do
       end
   end
 
-
-  devise_for :users
-
-  resources :users
+  post '/answers/setbest/:id/:setbest', to: 'answers#setbest'
 
   get "home/index"
 

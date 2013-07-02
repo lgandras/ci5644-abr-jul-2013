@@ -35,6 +35,7 @@ class Ability
         can    [               :index, :show,                 :destroy], Question
         can    [               :index, :show, :edit, :update, :destroy], User
     elsif user.has_role? :regular
+        can    [:setbest                                              ], Answer, :question => {:user_id => user.id}
         can    [:new, :create, :index, :show                          ], Answer
         cannot [:new, :create                                         ], Answer, :question => {:user_id => user.id}
         can    [:new, :create, :index, :show                          ], Comment

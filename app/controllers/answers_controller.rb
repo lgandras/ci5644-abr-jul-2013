@@ -48,6 +48,13 @@ class AnswersController < ApplicationController
     end
   end
 
+  def setbest
+    @answer = Answer.find(params[:id])
+    @answer.best = params[:setbest]
+    @answer.save
+    redirect_to @answer.question
+  end
+
   # POST /answers
   # POST /answers.json
   def create

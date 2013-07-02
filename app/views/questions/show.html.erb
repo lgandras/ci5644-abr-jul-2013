@@ -82,14 +82,19 @@
          <b><%= answer.user.username %>: </b> <%= answer.body %>
       </td>
       <td>
-         <% if answer.best == nil -%>
-              <h4>(Sin evaluar)</h4> 
-        <%  else -%>
-              <% if answer.best == true %>
-                <h4>(Correcto)</h4>
-              <% else -%>
-                <h4>(Incorrecto)</h4>
-              <% end %>
+        <% if answer.best == nil -%>
+          <h4>(Sin evaluar)</h4> 
+        <% elsif answer.best == true %>
+          <h4>(Correcto)</h4>
+        <% else %>
+          <h4>(Incorrecto)</h4>
+        <% end %>
+        <% if can? :setbest, answer %>
+          <% if answer.best != true -%>
+            <p><%= link_to 'Seleccionar', {:controller => 'answers', :action => 'setbest', :id => answer, :setbest => '1'}, :method => "post" %></p>
+          <% else %>
+            <p><%= link_to 'Deseleccionar', {:controller => 'answers', :action => 'setbest', :id => answer, :setbest => '0'}, :method => "post" %></p>
+          <% end %>
         <% end %>
       </td>
       <td>
